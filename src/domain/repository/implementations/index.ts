@@ -1,0 +1,1 @@
+export { UserMemoryRepository } from './UserMemoryRepository'
