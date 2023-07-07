@@ -1,9 +1,9 @@
 import { UserRepository } from '../../domain/repository'
 
-export class GetUser {
+export class GetAllUsers {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(email: string) {
-    return await this.userRepository.get({ email })
+  async execute() {
+    return this.userRepository.getAll()
   }
 }

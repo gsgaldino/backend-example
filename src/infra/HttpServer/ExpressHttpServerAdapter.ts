@@ -22,9 +22,9 @@ export class ExpressHttpServerAdapter implements HttpServer {
     this.app.use(express.json())
   }
 
-  on(method: HttpServerMethod, url: string, callback: (params: unknown, body: unknown) => void): void {
-    this.app[method](url, (req: Request, res: Response) => {
-      const output = callback(req.params, req.body)
+  on(method: HttpServerMethod, url: string, callback: (params: unknown, body: unknown) => Promise<any>): void {
+    this.app[method](url, async (req: Request, res: Response) => {
+      const output = await callback(req.params, req.body)
       res.json(output)
     })
   }

@@ -1,4 +1,4 @@
-import { UserRepository } from '../../domain/repository/interfaces'
+import { UserRepository } from '../../domain/repository'
 import { User } from '../../domain/entity'
 
 export class CreateUser {
