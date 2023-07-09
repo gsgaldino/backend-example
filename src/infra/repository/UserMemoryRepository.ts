@@ -1,5 +1,5 @@
 import { User } from '../../domain/entity'
-import { UserRepository } from '../../domain/repository'
+import { UserRepository, UpdateUserParams } from '../../domain/repository/UserRepository'
 
 export class UserMemoryRepository implements UserRepository {
   users: User[]
@@ -12,6 +12,36 @@ export class UserMemoryRepository implements UserRepository {
     }
     this.users = []
     this.users.push(user)
+  }
+
+  delete(email: string): Promise<boolean> {
+    const user = this.users.find((user) => user.email === email)
+    console.log('USER', user, email)
+    if (!user) return Promise.resolve(false)
+
+    return new Promise((resolve) => {
+      this.users = this.users.filter((user) => user.email !== email)
+      resolve(true)
+    })
+  }
+
+  update(email: string, params: UpdateUserParams): Promise<User> {
+    let updatedUser = {} as User
+
+    this.users = this.users.map((user) => {
+      if (user.email === email) {
+        const updated = {
+          ...user,
+          ...params
+        } as User
+
+        updatedUser = updated
+      }
+
+      return user
+    })
+
+    return Promise.resolve(updatedUser)
   }
 
   getAll(): Promise<User[]> {
